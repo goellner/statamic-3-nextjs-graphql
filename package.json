@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "autoprefixer": "^10.0.4",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "graphql-tag": "^2.11.0",
     "next": "latest",
     "postcss": "^8.1.10",
     "react": "^16.13.1",
