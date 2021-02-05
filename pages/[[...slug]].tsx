@@ -1,7 +1,14 @@
-import { fetchData } from '../utils/api'
-import { PAGE_DATA_QUERY, PAGE_SLUGS_QUERY } from '../gql/Page.query'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
-const Page = ({ pageData }) => {
+import { fetchData } from '@utils/api'
+import { PAGE_DATA_QUERY, PAGE_SLUGS_QUERY } from '@gql/Page.query'
+import { PageDataQuery, PageSlugsQuery } from '@typedefs/gql'
+
+interface Props {
+  pageData: PageDataQuery['entry']
+}
+
+const Page: NextPage<Props> = ({ pageData }) => {
   return (
     <div className="container">
       <h1 className="text-2xl mb-4">{pageData.title}</h1>
@@ -9,7 +16,7 @@ const Page = ({ pageData }) => {
   )
 }
 
-export const getStaticProps = async ({ params: { slug } = {} }) => {
+export const getStaticProps: GetStaticProps = async ({ params: { slug } = {} }) => {
   let pageSlug
   if (!slug) {
     pageSlug = '/'
@@ -20,7 +27,7 @@ export const getStaticProps = async ({ params: { slug } = {} }) => {
     pageSlug = `/${pageSlug}`
   }
 
-  const queryResult = await fetchData(PAGE_DATA_QUERY, {
+  const queryResult = await fetchData<PageDataQuery>(PAGE_DATA_QUERY, {
     uri: pageSlug,
   })
 
@@ -34,8 +41,8 @@ export const getStaticProps = async ({ params: { slug } = {} }) => {
   }
 }
 
-export const getStaticPaths = async () => {
-  const queryResult = await fetchData(PAGE_SLUGS_QUERY)
+export const getStaticPaths: GetStaticPaths = async () => {
+  const queryResult = await fetchData<PageSlugsQuery>(PAGE_SLUGS_QUERY)
   const entriesData = queryResult?.entries?.data
   let paths
   if (entriesData !== undefined) {

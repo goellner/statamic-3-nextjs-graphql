@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typegen": "graphql-codegen --require dotenv/config --config codegen.yml",
+    "typegen:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch"
   },
   "dependencies": {
     "autoprefixer": "^10.0.4",
@@ -17,5 +19,16 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "tailwindcss": "^2.0.2"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^2.0.2",
+    "@graphql-codegen/cli": "^1.20.1",
+    "@graphql-codegen/typescript": "^1.20.2",
+    "@graphql-codegen/typescript-graphql-request": "^3.0.1",
+    "@graphql-codegen/typescript-operations": "^1.17.14",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "dotenv": "^8.2.0",
+    "typescript": "^4.1.3"
   }
 }
