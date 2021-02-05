@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { IMAGE_FRAGMENT } from "@gql/Image.fragment";
+import { IMAGE_FRAGMENT } from "@root/gql/Image.fragment";
 
 export const PAGE_SLUGS_QUERY = gql`
   query PageSlugs {
@@ -18,14 +18,14 @@ export const PAGE_DATA_QUERY = gql`
         title
         bard {
           ... on Set_Bard_YoutubeVideo {
-            type
+            blockType: __typename
             youtube_id
             poster_image {
               ...ImageFragment
             }
           }
           ... on BardText {
-            type
+            blockType: __typename
             text
           }
         }

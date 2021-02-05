@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import BardText from '@components/BardText'
+import BardYoutubeVideo from '@components/BardYoutubeVideo'
 
 import { fetchData } from '@utils/api'
 import { PAGE_DATA_QUERY, PAGE_SLUGS_QUERY } from '@gql/Page.query'
@@ -15,10 +16,10 @@ const Page: NextPage<Props> = ({ pageData }) => {
     <div className="container">
       <h1 className="text-2xl mb-4">{pageData.title}</h1>
       {pageData.bard.map((bardItem) => {
-        if (bardItem.type === 'text') {
+        if (bardItem.blockType === 'BardText') {
           return <BardText text={bardItem.text} />
-        } else {
-          return <div className="p-4 rounded-md bg-red-300 text-red-600">Block {bardItem.type} not defined yet</div>
+        } else if (bardItem.blockType === 'Set_Bard_YoutubeVideo') {
+          return <BardYoutubeVideo youtubeVideoId={bardItem.youtube_id} posterImage={bardItem.poster_image} />
         }
       })}
     </div>

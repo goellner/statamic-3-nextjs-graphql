@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 export const IMAGE_FRAGMENT = gql`
   fragment ImageFragment on Asset_Assets {
+    permalink
     url
     width
     height
