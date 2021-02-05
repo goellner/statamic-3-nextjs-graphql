@@ -10,6 +10,7 @@
     "typegen:watch": "graphql-codegen --require dotenv/config --config codegen.yml --watch"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.4.0",
     "autoprefixer": "^10.0.4",
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",

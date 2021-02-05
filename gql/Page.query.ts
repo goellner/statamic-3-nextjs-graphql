@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { IMAGE_FRAGMENT } from "@gql/Image.fragment";
 
 export const PAGE_SLUGS_QUERY = gql`
   query PageSlugs {
@@ -13,14 +14,14 @@ export const PAGE_SLUGS_QUERY = gql`
 export const PAGE_DATA_QUERY = gql`
   query PageData($uri: String) {
     entry(uri: $uri) {
-      title
       ... on Entry_Pages_Pages {
+        title
         bard {
           ... on Set_Bard_YoutubeVideo {
             type
             youtube_id
             poster_image {
-              url
+              ...ImageFragment
             }
           }
           ... on BardText {
@@ -31,4 +32,5 @@ export const PAGE_DATA_QUERY = gql`
       }
     }
   }
+  ${IMAGE_FRAGMENT}
 `

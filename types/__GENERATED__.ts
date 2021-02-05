@@ -597,6 +597,8 @@ export type Asset_Assets = AssetInterface & {
   ratio?: Maybe<Scalars['Float']>;
 };
 
+export type ImageFragmentFragment = { url?: Maybe<string>, width?: Maybe<number>, height?: Maybe<number>, ratio?: Maybe<number>, orientation?: Maybe<string>, focus_css?: Maybe<string>, is_audio?: Maybe<boolean>, is_image?: Maybe<boolean>, is_video?: Maybe<boolean>, size_kb?: Maybe<number> };
+
 export type PageSlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -607,9 +609,22 @@ export type PageDataQueryVariables = Exact<{
 }>;
 
 
-export type PageDataQuery = { entry?: Maybe<{ title: string } | { title: string, bard?: Maybe<Array<Maybe<{ type: string, youtube_id: string, poster_image: { url?: Maybe<string> } } | { type: string, text?: Maybe<string> }>>> }> };
+export type PageDataQuery = { entry?: Maybe<{ title: string, bard?: Maybe<Array<Maybe<{ type: string, youtube_id: string, poster_image: ImageFragmentFragment } | { type: string, text?: Maybe<string> }>>> }> };
 
-
+export const ImageFragmentFragmentDoc = gql`
+    fragment ImageFragment on Asset_Assets {
+  url
+  width
+  height
+  ratio
+  orientation
+  focus_css
+  is_audio
+  is_image
+  is_video
+  size_kb
+}
+    `;
 export const PageSlugsDocument = gql`
     query PageSlugs {
   entries(collection: "pages") {
@@ -622,14 +637,14 @@ export const PageSlugsDocument = gql`
 export const PageDataDocument = gql`
     query PageData($uri: String) {
   entry(uri: $uri) {
-    title
     ... on Entry_Pages_Pages {
+      title
       bard {
         ... on Set_Bard_YoutubeVideo {
           type
           youtube_id
           poster_image {
-            url
+            ...ImageFragment
           }
         }
         ... on BardText {
@@ -640,7 +655,7 @@ export const PageDataDocument = gql`
     }
   }
 }
-    `;
+    ${ImageFragmentFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
